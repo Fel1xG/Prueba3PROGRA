@@ -1,0 +1,12 @@
+{% extends "miApp/index.html" %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/mi_estilo.css' %}">
+  <h1>Eliminar Producto</h1>
+  <p>¿Seguro que deseas eliminar el producto "{{ producto.nombre }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+  </form>
+  <a href="{% url 'miApp:lista_productos' %}">Cancelar</a>
+{% endblock %}

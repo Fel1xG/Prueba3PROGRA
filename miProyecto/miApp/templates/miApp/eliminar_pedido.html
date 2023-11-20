@@ -1,0 +1,13 @@
+{% extends "miApp/lista_pedido.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pedido.css' %}">
+    <title>Eliminar Pedido</title>
+    <h1>Eliminar Pedido</h1>
+    <p>Este pedido será eliminado. ¿Estás seguro?</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit">Eliminar</button>
+    </form>
+    <a href="{% url 'miApp:lista_pedidos' %}">Cancelar</a>
+{% endblock %}

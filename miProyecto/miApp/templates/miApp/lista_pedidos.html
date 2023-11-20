@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pedido.css' %}">
+    <title>Lista de Pedidos</title>
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+    
+    
+    <h3>Agregar Nuevo Pedido</h3>
+    <form method="post" action="{% url 'miApp:lista_pedidos' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Agregar Pedido</button>
+        <button type="button" onclick="generarNumeroSeguimiento()">Generar Número de Seguimiento</button>
+    </form>
+
+    {% if pedidos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID del Pedido</th>
+                    <th>Fecha del Pedido</th>
+                    <th>Estado</th>
+                    <th>Método de Pago</th>
+                    <th>Dirección de Envío</th>
+                    <th>Número de Seguimiento</th>
+                    <th>Cliente</th>
+                    <th>Productos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                    <tr>
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.fecha_pedido }}</td>
+                        <td>{{ pedido.estado }}</td>
+                        <td>{{ pedido.metodo_pago }}</td>
+                        <td>{{ pedido.direccion_envio }}</td>
+                        <td>{{ pedido.numero_seguimiento }}</td>
+                        <td>{{ pedido.cliente.nombre }}</td>
+                        <td>
+                            <ul>
+                                {% for producto in pedido.productos.all %}
+                                    <li>{{ producto.nombre }} - {{ producto.precio }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <a href="{% url 'miApp:editar_pedido' pedido.pk %}">Editar</a>
+                            <a href="{% url 'miApp:eliminar_pedido' pedido.pk %}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay pedidos en el sistema.</p>
+    {% endif %}
+    
+    <a href="{% url 'miApp:index' %}">VOLVER</a>
+    
+    <script>
+        function generarNumeroSeguimiento() {
+            const numeroSeguimientoInput = document.getElementById("id_numero_seguimiento");
+            const numeroSeguimiento = "NS-" + Math.floor(Math.random() * 10000000);
+            numeroSeguimientoInput.value = numeroSeguimiento;
+        }
+    </script>
+</body>
+</html>

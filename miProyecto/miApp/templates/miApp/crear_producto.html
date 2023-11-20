@@ -1,0 +1,12 @@
+{% extends "miApp/index.html" %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/mi_estilo.css' %}">
+  <h1>Crear Producto</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+  <a href="{% url 'miApp:lista_productos' %}">Volver a la lista de productos</a>
+{% endblock %}

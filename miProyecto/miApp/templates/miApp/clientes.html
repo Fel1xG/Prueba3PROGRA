@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/mi_estilo.css' %}">
+    <title>Listado</title>
+</head>
+<body>
+    <div>LISTADO DE CLIENTES</div>
+    {% if clientes %}
+    <table>
+        <thead>
+            <tr>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th>Numero de Compras</th>
+                <th colspan="3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.rut }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.correo }}</td>
+                <td>{{ cliente.direccion }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>{{ cliente.numeroCompras }}</td>
+                <td>
+                    <form action="{% url 'miApp:eliminar_cliente' cliente.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'miApp:actualizar_cliente' cliente.id %}" method="get" style="display:inline;">
+                        <button type="submit"><i class="fas fa-pencil-alt"></i> Editar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div>
+        <strong>No se encuentran clientes en el sistema</strong>
+    </div>
+    {% endif %}
+    <a href="{% url 'miApp:index' %}">Volver Inicio</a><br><br>
+    <a href="{% url 'miApp:agregar_clientes' %}">Agregar Clientes</a>
+    
+</body>
+</html>

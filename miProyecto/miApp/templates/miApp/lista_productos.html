@@ -1,0 +1,42 @@
+{% extends "miApp/index.html" %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/mi_estilo.css' %}">
+  <h1>Lista de Productos</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Descripción</th>
+        <th>Categoría</th>
+        <th>Stock</th>
+        <th>Tamaño</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+        <tr>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.precio }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.stock }}</td>
+          <td>
+            {% if producto.tamaño %}
+              {{ producto.tamaño }}
+            {% else %}
+              No especificado
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'miApp:editar_producto' producto.pk %}">Editar</a>
+            <a href="{% url 'miApp:eliminar_producto' producto.pk %}">Eliminar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'miApp:crear_producto' %}">Crear Producto</a>
+{% endblock %}

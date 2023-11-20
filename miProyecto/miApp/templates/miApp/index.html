@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mi_estilo.css' %}">
+    <title>Mi Proyecto</title>
+</head>
+<body>
+    <header>
+        <h1>Productos y Clientes</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'miApp:lista_productos' %}">Lista de Productos</a></li>
+                <li><a href="{% url 'miApp:crear_producto' %}">Crear Producto</a></li>
+                <li><a href="{% url 'miApp:listado_clientes' %}">Listado de Clientes</a></li>
+                <li><a href="{% url 'miApp:agregar_clientes' %}">Agregar Cliente</a></li>
+                <li><button onclick="window.location.href='/admin/';">Panel Admin</button></li>
+                <li><a href="{% url 'miApp:lista_pedidos' %}">Ver Lista de Pedidos</a></li>
+            </ul>            
+        </nav>
+    </header>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
